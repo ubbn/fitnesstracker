@@ -1,10 +1,24 @@
 import React, {Component} from 'react'
-import { View, Text, Button } from 'react-native'
+import { 
+  View, 
+  Text, 
+  TouchableOpacity
+} from 'react-native'
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-import { getMetricMetaInfo } from '../utils/helpers'
+import { getMetricMetaInfo, timeToString } from '../utils/helpers'
 import DateHeader from './DateHeader'
-import Stepper from './Stepper'
-import Slider from './Slider'
+import UdaStepper from './UdaStepper'
+import UdaSlider from './UdaSlider'
+import TextButton from './TextButton'
+
+function SubmitBtn({ onPress }){
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <Text>SUBMIT</Text>
+    </TouchableOpacity>
+  )
+}
 
 class AddEntry extends Component {
   state = {
@@ -43,12 +57,59 @@ class AddEntry extends Component {
     })
   }
 
+  submit = () => {
+    const key = timeToString()
+    const entry = this.state
+
+    // Redux
+    this.setState({
+      run: 0,
+      bike: 0,
+      swim: 0,
+      sleep: 0,
+      eat: 0      
+    })
+
+    // Navigate
+
+    // Save to db
+
+    // Clean local notifications
+
+  }
+
+  reset = () => {
+    const key = timeToString()
+
+    // Update redux
+
+    // Route to HOME
+
+    // Update DB
+  }
+
   render () {
     const metaInfo = getMetricMetaInfo()
+
+    if (this.props.alreadyLogged) {
+      return (
+        <View>
+          <Ionicons 
+            name="ios-happy-outline"
+            size={100}
+          />
+          <Text>You alread logged your information to today</Text>
+          <TextButton onPress={this.reset}>
+            Reset
+          </TextButton>
+        </View>
+      )
+    }
 
     return (
       <View>
         <DateHeader date={(new Date().toLocaleDateString())} />
+        <Text>{JSON.stringify(this.state)}</Text>
         {Object.keys(metaInfo).map(key => {
           const { getIcon, type, ...rest } = metaInfo[key]
           const value = this.state[key]
@@ -56,13 +117,13 @@ class AddEntry extends Component {
           return (
             <View key={key}>
               {getIcon()}
-              {type === 'steppers'
-                ? <Stepper
+              {type === 'slider'
+                ? <UdaSlider 
                     value={value}
                     onChange={(value) => this.slide(key, value)}
                     {...rest}
                   />
-                : <Slider 
+                : <UdaStepper
                     value={value}
                     onIncrement={() => this.increment(key)}
                     onDecrement={() => this.decrement(key)}
@@ -72,6 +133,7 @@ class AddEntry extends Component {
             </View>
           )
         })}
+        <SubmitBtn onPress={this.submit}/>
       </View>
     )
   }
