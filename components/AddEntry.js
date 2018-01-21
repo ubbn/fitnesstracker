@@ -7,6 +7,7 @@ import {
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { getMetricMetaInfo, timeToString } from '../utils/helpers'
+import { submitEntry, removeEntry } from '../utils/api'
 import DateHeader from './DateHeader'
 import UdaStepper from './UdaStepper'
 import UdaSlider from './UdaSlider'
@@ -72,7 +73,7 @@ class AddEntry extends Component {
 
     // Navigate
 
-    // Save to db
+    submitEntry({key, entry})
 
     // Clean local notifications
 
@@ -85,7 +86,7 @@ class AddEntry extends Component {
 
     // Route to HOME
 
-    // Update DB
+    removeEntry(key)
   }
 
   render () {
