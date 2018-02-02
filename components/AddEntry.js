@@ -65,11 +65,7 @@ class AddEntry extends Component {
     const entry = this.state
 
     // access Redux
-    console.log(this.props)
-    console.log(key)
-    console.log(entry)
-
-    this.props.dispath(addEntry({
+    this.props.dispatch(addEntry({
       [key]: entry
     }))
 
@@ -94,7 +90,7 @@ class AddEntry extends Component {
     const key = timeToString()
 
     // Update redux
-    this.props.dispath(addEntry({
+    this.props.dispatch(addEntry({
       [key]: getDailyReminderValue()
     }))
 

@@ -8,7 +8,6 @@ function entries (state={}, action) {
         ...action.entries
       }
     case ADD_ENTRY:
-      console.log('Reduced?')
       return {
         ...state,
         ...action.entry
