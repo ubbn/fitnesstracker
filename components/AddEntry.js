@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 
 import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../utils/helpers'
 import { submitEntry, removeEntry } from '../utils/api'
@@ -82,12 +83,12 @@ class AddEntry extends Component {
     })
 
     // Navigate
+    this.goHome()
 
     // Save to db
     submitEntry({key, entry})
 
     // Clean local notifications
-
   }
 
   reset = () => {
@@ -99,9 +100,14 @@ class AddEntry extends Component {
     }))
 
     // Route to HOME
+    this.goHome()
 
     // Update to db
     removeEntry(key)
+  }
+
+  goHome = () => {
+    this.props.navigation.dispatch(NavigationActions.back({key: 'AddEntry'}))
   }
 
   render () {
