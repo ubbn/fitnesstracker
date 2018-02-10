@@ -9,6 +9,7 @@ import { Constants } from 'expo'
 import History from './components/History'
 import AddEntry from './components/AddEntry'
 import EntryDetail from './components/EntryDetail'
+import Live from './components/Live'
 import reducer from './reducers'
 import { purple, white } from './utils/colors'
 
@@ -33,6 +34,13 @@ const Tabs = TabNavigator({
       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
     }
   },
+  Live: {
+    screen: Live,
+    navigationOptions: {
+      tabBarLabel: 'Live',
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-speedometer' size={30} color={tintColor} />
+    }
+  },  
 }, 
 {
   navigationOptions: {
