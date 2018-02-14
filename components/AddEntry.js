@@ -10,7 +10,13 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 
-import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../utils/helpers'
+import { 
+  getMetricMetaInfo, 
+  timeToString, 
+  getDailyReminderValue,
+  clearLocalNotification,
+  setLocalNotification
+} from '../utils/helpers'
 import { submitEntry, removeEntry } from '../utils/api'
 import { purple, white } from '../utils/colors'
 import DateHeader from './DateHeader'
@@ -22,7 +28,7 @@ import { addEntry } from '../actions'
 function SubmitBtn({ onPress }){
   return (
     <TouchableOpacity onPress={onPress}
-      style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitButton}>
+      style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}>
       <Text style={styles.submitBtnText}>SUBMIT</Text>
     </TouchableOpacity>
   )
@@ -89,6 +95,8 @@ class AddEntry extends Component {
     submitEntry({key, entry})
 
     // Clean local notifications
+    clearLocalNotification()
+      .then(setLocalNotification)
   }
 
   reset = () => {
@@ -186,7 +194,6 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     height: 45,
     borderRadius: 2,
-    alignSelf: 'flex-end',
     justifyContent: 'center',
     alignItems: 'center',
   },
